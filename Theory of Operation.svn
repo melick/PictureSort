@@ -1,9 +1,0 @@
-DATABASE CONNECTIONS
-KPI:                BBDEV001\hcs, database KPI, user KPI : $k3l32k
-MicroMD_Replicated: BBDEV001\hcs, database db34, user KPI : $k3l32k
-CernerRec:          BBDEV001\hcs, database CernerRec, user CernerRec : B2WV5V4gAFxFYUMd
-
-File connections:
-ChargesDailyAllOffices - reads from files in \\bbnas001\analytics\Cerner
-HL7_Log_Reader - Reads from Z:\ProgramData\Micro-Office Systems, Inc\eBiz2MicroMD7
-Z is mapped "NET USE Z: \\bbsql001\c$ lmlb@55g /user:ssg\HCSAdmin" during the run.

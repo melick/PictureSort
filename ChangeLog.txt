@@ -1,0 +1,7 @@
+Latest Version:
+-----------------------------------------------------------------------
+$WCMIXED?[$WCRANGE$]:v$WCREV$$ $WCMODS?with local mods:$ 
+$WCDATE=%Y-%b-%d %I:%M:%S%p$
+
+
+2014 July 07 - LOMelick : Repository Created.  

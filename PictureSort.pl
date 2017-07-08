@@ -121,7 +121,7 @@ sub sort_picture {
 
 
     # ----- build new file name
-    my $new_name = "$DIR\/$subdir\/$date-$digest.jpg";
+    my $new_name = "$DIR$subdir\/$date-$digest.jpg";
     my $new_dir  = "$DIR$subdir";
 
 

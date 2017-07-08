@@ -16,7 +16,7 @@ my $which_db = 'PictureSort';
 use 5.010;
 
 use strict;
-use warnings;
+#use warnings;
 use autodie;
 
 
@@ -91,86 +91,51 @@ sub sort_picture {
     printf "f:%s:\n", $file if $verbose;
 
 
-=begin GHOSTCODE
-    # ----- Does the file exist?
-    (my $dev,my $ino,my $mode,my $nlink,my $uid,my $gid,my $rdev,my $size,my $atime,my $mtime,my $ctime,my $blksize,my $blocks) = stat("$File::Find::name");
-    if (-e _) {
+    # ----- pull out the exif info
+    my $exif = Image::ExifTool->new;
+    $exif->ExtractInfo($File::Find::name);
 
-        printf "\t%s exists.\n", $File::Find::name if $verbose;
 
-        if (-z _) {
-            printf "\t\tIt is zero bytes\n" if $verbose;
-            exit;
+    # ----- get the date [ DateTimeOriginal | DateAcquired ]
+    my $date = $exif->GetValue('DateTimeOriginal', 'PrintConv');
+    if (defined $date) {
+        printf "pulled date from DateTimeOriginal.\n" if $verbose;
+    } else {
+        # ----- try again with DateAcquired
+        $date = $exif->GetValue('DateAcquired', 'PrintConv');
+        if (defined $date) {
+            printf "pulled date from DateAcquired.\n" if $verbose;
         }
+    }
+    next unless defined $date;  # -----skip file if DateTimeOriginal is not in the file (skips non-image files as well)
+    $date =~ tr[ :][T-];
 
-        if (-s _) {
-            printf "\t\tIt is %s bytes long\n", $size if $verbose;
-
-            # ---------------------------------------------------------------------------------------------------------------------
-=end GHOSTCODE
-=cut
-
-            # ----- pull out the exif info
-            my $exif = Image::ExifTool->new;
-            $exif->ExtractInfo($File::Find::name);
+    # split off just the date for the subdir name
+    my $subdir = substr($date,0,10);
+    printf "subdir: [%s]\n", $subdir if $verbose;
 
 
-            # ----- get the date [ DateTimeOriginal | DateAcquired ]
-            #       prefer using 
-            my $date = $exif->GetValue('DateTimeOriginal', 'PrintConv');
-            if (defined $date) {
-                printf "pulled date from DateTimeOriginal.\n" if $verbose;
-            } else {
-                # ----- try again with DateAcquired
-                $date = $exif->GetValue('DateAcquired', 'PrintConv');
-                if (defined $date) {
-                    printf "pulled date from DateAcquired.\n" if $verbose;
-                }
-            }
-            next unless defined $date;  # -----skip file if DateTimeOriginal is not in the file (skips non-image files as well)
-            $date =~ tr[ :][T-];
-
-            # split off just the date for the subdir name
-            my $subdir = substr($date,0,10);
-            printf "subdir: [%s]\n", $subdir if $verbose;
+    # ----- get the MD5 hash
+    my $digest = md5_hex($File::Find::name->slurp);
+    $digest = substr($digest,0,7);
 
 
-            # ----- get the MD5 hash
-            my $digest = md5_hex($File::Find::name->slurp);
-            $digest = substr($digest,0,7);
+    # ----- build new file name
+    my $new_name = "$subdir\/$date-$digest.jpg";
 
 
-            # ----- build new file name
-            my $new_name = "$subdir\/$date-$digest.jpg";
+    # ----- create a new subdirectory for the date if necessary
+    my @created = make_path($subdir, {
+      verbose => 1,
+      mode => 0700,
+    });
 
 
-            # ----- create a new subdirectory for the date if necessary
-            my @created = make_path($subdir, {
-              verbose => 1,
-              mode => 0700,
-            });
+    # ----- rename the file.  Caution - the sharpest edge is here...
+    unless ( $File::Find::name->basename eq $new_name ) {
+        # copy $File::Find::name => $new_name;
+        say "copied $File::Find::name => $new_name";
+    }
 
-
-            # ----- rename the file.  Caution - the sharpest edge is here...
-            unless ( $File::Find::name->basename eq $new_name ) {
-                # copy $File::Find::name => $new_name;
-                say "copied $File::Find::name => $new_name";
-            }
-
-=begin GHOSTCODE
-
-            # ---------------------------------------------------------------------------------------------------------------------
-
-        } # ----- end of file has size inside of file exists = yes
-
-
-    } else { # ----- end of file exists = yes
-
-        printf "\n -----\nDidn't find the file: %s.\n", $File::Find::name;
-
-    } # ----- file exists = no
-
-=end GHOSTCODE
-=cut
 
 }

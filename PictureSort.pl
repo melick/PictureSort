@@ -84,6 +84,7 @@ sub sort_picture {
 
     # ----- file name including path
     printf "FFn:%s:\n", $File::Find::name if $verbose;
+    printf "FFn:%s:\n", $File::Find::name if -d;
 
     # ----- Does the file exist?
     (my $dev,my $ino,my $mode,my $nlink,my $uid,my $gid,my $rdev,my $size,my $atime,my $mtime,my $ctime,my $blksize,my $blocks) = stat("$File::Find::name");

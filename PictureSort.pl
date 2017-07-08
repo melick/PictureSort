@@ -122,17 +122,18 @@ sub sort_picture {
 
     # ----- build new file name
     my $new_name = "$DIR\/$subdir\/$date-$digest.jpg";
+    my $new_dir  = "$DIR\/$subdir";
 
 
     # ----- create a new subdirectory for the date if necessary
-    my @created = make_path($DIR/$subdir, {
+    my @created = make_path($new_dir, {
       verbose => 1,
       mode => 0700,
     });
 
 
     # ----- rename the file.  Caution - the sharpest edge is here...
-    unless ( $File::Find::name->basename eq $new_name ) {
+    unless ( $File::Find::name eq $new_name ) {
         # copy $File::Find::name => $new_name;
         say "copied $File::Find::name => $new_name";
     }

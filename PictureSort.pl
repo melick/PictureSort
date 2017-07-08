@@ -56,6 +56,7 @@ printf "ScriptName [%s], DIR [%s] suffix [%s]\n", $ScriptName, $DIR, $suffix if 
 
 
 # ----- let's get bizzy
+use File::Find;
 find(\&sort_picture, $InputDir);
 
 
@@ -73,7 +74,6 @@ sub sort_picture {
     # ----- modules in the subroutine
     use Digest::MD5 'md5_hex';
     use File::Copy qw(copy);
-    use File::Find;
     use File::Path qw(make_path);
     use Image::ExifTool 'ImageInfo';
     use Path::Class;

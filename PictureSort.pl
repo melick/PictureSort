@@ -71,6 +71,8 @@ find(\&sort_picture, $InputDir);
 
 sub sort_picture {
 
+    next if $File::Find::dir eq $DIR;
+
     # ----- modules in the subroutine
     use Digest::MD5 'md5_hex';
     use File::Copy qw(copy);

@@ -116,7 +116,7 @@ sub sort_picture {
 
 
     # ----- get the MD5 hash
-    my $digest = md5_hex($File::Find::name->slurp);
+    my $digest = md5_hex($File::Find::name);
     $digest = substr($digest,0,7);
 
 

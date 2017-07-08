@@ -16,8 +16,8 @@ my $which_db = 'PictureSort';
 use 5.010;
 
 use strict;
-#use warnings;
-#use autodie;
+use warnings;
+use autodie qw(:all);
 
 
 # ----- handle input parameters

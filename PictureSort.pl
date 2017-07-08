@@ -78,14 +78,20 @@ sub sort_picture {
     use Image::ExifTool 'ImageInfo';
     use Path::Class;
 
-    # ----- file name
-    my $file = $_;
-    printf "f:%s:\n", $file if $verbose;
+    # ----- file name including path
+    printf "FFd:%s:\n", $File::Find::dir if $verbose;
+    printf "FFd:%s:\n", $File::Find::dir if -d;
 
     # ----- file name including path
     printf "FFn:%s:\n", $File::Find::name if $verbose;
     printf "FFn:%s:\n", $File::Find::name if -d;
 
+    # ----- file name
+    my $file = $_;
+    printf "f:%s:\n", $file if $verbose;
+
+
+=begin GHOSTCODE
     # ----- Does the file exist?
     (my $dev,my $ino,my $mode,my $nlink,my $uid,my $gid,my $rdev,my $size,my $atime,my $mtime,my $ctime,my $blksize,my $blocks) = stat("$File::Find::name");
     if (-e _) {
@@ -101,6 +107,8 @@ sub sort_picture {
             printf "\t\tIt is %s bytes long\n", $size if $verbose;
 
             # ---------------------------------------------------------------------------------------------------------------------
+=end GHOSTCODE
+=cut
 
             # ----- pull out the exif info
             my $exif = Image::ExifTool->new;
@@ -149,6 +157,8 @@ sub sort_picture {
                 say "copied $File::Find::name => $new_name";
             }
 
+=begin GHOSTCODE
+
             # ---------------------------------------------------------------------------------------------------------------------
 
         } # ----- end of file has size inside of file exists = yes
@@ -159,5 +169,8 @@ sub sort_picture {
         printf "\n -----\nDidn't find the file: %s.\n", $File::Find::name;
 
     } # ----- file exists = no
+
+=end GHOSTCODE
+=cut
 
 }

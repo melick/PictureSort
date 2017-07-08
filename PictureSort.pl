@@ -84,7 +84,7 @@ sub sort_picture {
 
     # ----- file name including path
     printf "FFn:%s:\n", $File::Find::name if $verbose;
-    printf "FFn:%s:\n", $File::Find::name if -d;
+    printf "FFn:%s:\n", $File::Find::name if !(-d);
 
     # ----- file name
     my $file = $_;

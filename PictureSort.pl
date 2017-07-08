@@ -19,14 +19,6 @@ use strict;
 use warnings;
 use autodie;
 
-# ----- modules in the subroutine
-use Digest::MD5 'md5_hex';
-use File::Copy qw(copy);
-use File::Find;
-use File::Path qw(make_path);
-use Image::ExifTool 'ImageInfo';
-use Path::Class;
-
 
 # ----- handle input parameters
 use Getopt::Long;
@@ -77,6 +69,15 @@ find(\&sort_picture, $InputDir);
 =cut
 
 sub sort_picture {
+
+    # ----- modules in the subroutine
+    use Digest::MD5 'md5_hex';
+    use File::Copy qw(copy);
+    use File::Find;
+    use File::Path qw(make_path);
+    use Image::ExifTool 'ImageInfo';
+    use Path::Class;
+
     # ----- file name
     my $file = $_;
     printf "f:%s:\n", $file; # if -d $file;

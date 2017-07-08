@@ -122,7 +122,7 @@ sub sort_picture {
 
     # ----- build new file name
     my $new_name = "$DIR\/$subdir\/$date-$digest.jpg";
-    my $new_dir  = "$DIR\/$subdir";
+    my $new_dir  = "$DIR$subdir";
 
 
     # ----- create a new subdirectory for the date if necessary

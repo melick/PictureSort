@@ -17,7 +17,7 @@ use 5.010;
 
 use strict;
 use warnings;
-use autodie qw(:all);
+use autodie;
 
 
 # ----- handle input parameters

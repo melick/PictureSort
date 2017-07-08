@@ -121,11 +121,11 @@ sub sort_picture {
 
 
     # ----- build new file name
-    my $new_name = "$subdir\/$date-$digest.jpg";
+    my $new_name = "$DIR\/$subdir\/$date-$digest.jpg";
 
 
     # ----- create a new subdirectory for the date if necessary
-    my @created = make_path($subdir, {
+    my @created = make_path($DIR/$subdir, {
       verbose => 1,
       mode => 0700,
     });

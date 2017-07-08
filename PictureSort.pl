@@ -29,7 +29,7 @@ GetOptions ("inputDir=s" => \$InputDir, # string
             "debug"      => \$debug,    # flag
             "verbose"    => \$verbose ) # flag
 or die("Error in command line arguments\n");
-printf "i [%s], d [%s], v [%s]\n" if $debug;
+printf "i [%s], d [%s], v [%s]\n", $InputDir, $debug, $verbose if $debug;
 
 # ----- Date & Time setups
 use DateTime;

@@ -130,7 +130,7 @@ sub sort_picture {
     # ----- create a new subdirectory for the date if necessary
     my @created = make_path($new_dir, {
       verbose => 1,
-      mode => 0700,
+      mode => 0755,
     });
 
 

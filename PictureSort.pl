@@ -80,10 +80,10 @@ sub sort_picture {
 
     # ----- file name
     my $file = $_;
-    printf "f:%s:\n", $file; # if -d $file;
+    printf "f:%s:\n", $file if $verbose;
 
     # ----- file name including path
-    printf "FFn:%s:\n", $File::Find::name; # if -d
+    printf "FFn:%s:\n", $File::Find::name if $verbose;
 
     # ----- Does the file exist?
     (my $dev,my $ino,my $mode,my $nlink,my $uid,my $gid,my $rdev,my $size,my $atime,my $mtime,my $ctime,my $blksize,my $blocks) = stat("$File::Find::name");
@@ -110,12 +110,12 @@ sub sort_picture {
             #       prefer using 
             my $date = $exif->GetValue('DateTimeOriginal', 'PrintConv');
             if (defined $date) {
-                printf "pulled date from DateTimeOriginal.\n";
+                printf "pulled date from DateTimeOriginal.\n" if $verbose;
             } else {
                 # ----- try again with DateAcquired
                 $date = $exif->GetValue('DateAcquired', 'PrintConv');
                 if (defined $date) {
-                    printf "pulled date from DateAcquired.\n";
+                    printf "pulled date from DateAcquired.\n" if $verbose;
                 }
             }
             next unless defined $date;  # -----skip file if DateTimeOriginal is not in the file (skips non-image files as well)
@@ -123,7 +123,7 @@ sub sort_picture {
 
             # split off just the date for the subdir name
             my $subdir = substr($date,0,10);
-            printf "subdir: [%s]\n", $subdir;
+            printf "subdir: [%s]\n", $subdir if $verbose;
 
 
             # ----- get the MD5 hash

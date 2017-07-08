@@ -103,7 +103,7 @@ sub sort_picture {
 
             # ----- pull out the exif info
             my $exif = Image::ExifTool->new;
-            $exif->ExtractInfo($File::Find::name->stringify);
+            $exif->ExtractInfo($File::Find::name);
 
 
             # ----- get the date [ DateTimeOriginal | DateAcquired ]

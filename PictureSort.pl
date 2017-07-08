@@ -16,7 +16,7 @@ my $which_db = 'PictureSort';
 use 5.010;
 
 use strict;
-use warnings;
+#use warnings;
 #use autodie;
 
 

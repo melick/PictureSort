@@ -134,7 +134,7 @@ sub sort_picture {
 
     # ----- rename the file.  Caution - the sharpest edge is here...
     unless ( $File::Find::name eq $new_name ) {
-        # copy $File::Find::name => $new_name;
+        copy $File::Find::name => $new_name;
         say "copied $File::Find::name => $new_name";
     }
 

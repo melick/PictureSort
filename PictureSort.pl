@@ -118,8 +118,15 @@ sub sort_picture {
 
 
     # ----- get the MD5 hash
-    my $digest = md5_hex($File::Find::name);
+    my $hash;
+    open FILE, "$File::Find::name";
+    binmode FILE;
+    my $data = <FILE>;
+    close FILE;
+    my $digest = md5_hex($data);
+    printf("md5_hex_a:%s\n",$digest) if $verbose;
     $digest = substr($digest,0,7);
+    printf("md5_hex_b:%s\n",$digest) if $verbose;
 
 
     # ----- build new file name
